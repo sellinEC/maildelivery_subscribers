@@ -1,0 +1,42 @@
+
+
+<mat-card >
+
+  <mat-card-header >
+  Subscribe to newspaper
+  </mat-card-header>
+
+  <mat-card-subtitle>
+    <span *ngIf="subscriptionIsActive">
+      Subscription is active
+    </span>
+    <span *ngIf="!subscriptionIsActive">
+      Subscription is not active
+    </span>
+
+  </mat-card-subtitle>
+
+  <mat-card-content>
+    <button mat-button color="primary"  (click)="subscribeToNewsPaper()" tabindex="0">
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      <span>Subscribe to newspaper</span>
+    </button>
+
+  </mat-card-content>
+
+
+
+  <h3>Alla tidningar mottagna ({{allNewsPapersReceived.length}})</h3>
+  <div *ngFor="let paper of allNewsPapersReceived">
+    <span>Tidningsnamn: {{paper.name}}</span>
+    <span>utgåva: {{paper.edition}}</span>
+    <span>Rubrik: {{paper.frontNewsHeadline}}</span>
+    <span>Datum: {{paper.printDate}}</span>
+  </div>
+
+
+  <app-news-paper-subscriber-mailbox
+    style="margin-top: 5rem;"></app-news-paper-subscriber-mailbox>
+</mat-card>
+
+
