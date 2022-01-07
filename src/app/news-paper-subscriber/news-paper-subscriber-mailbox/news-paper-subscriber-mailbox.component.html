@@ -5,7 +5,11 @@
   </mat-card-header>
 
   <mat-card-subtitle>
-    Listing some content of my mailbox here
+    <ul>
+      <li *ngFor="let paper of inbox">
+        <p>{{paper.frontNewsHeadline}} to {{paper.address}}</p>
+      </li>
+    </ul>
   </mat-card-subtitle>
 
   <mat-card-content>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { MailDeliveryService } from '../mail-delivery-distributor/MailDeliveryService.service';
+import { Prenumerant } from '../mail-delivery-distributor/Prenumerant.model';
 import { NewsPaperPublisherService } from '../news-paper-publisher.service';
+
 import { NewsPaper } from './NewsPaper.model';
 
 
@@ -23,14 +26,14 @@ export class NewsPaperPublisherComponent implements OnInit {
    * publicera ny utgåva genom att använda .next(newsPaper);
    */
   // public newEditionPublished = new Subject<NewsPaper>();
-
+  prenumeranter: Prenumerant[] = []
 
   public allPublishedEditions: NewsPaper[] = [];
 
-  constructor(private paperService : NewsPaperPublisherService) { }
+  constructor(private paperService : NewsPaperPublisherService, private postalService: MailDeliveryService) { }
 
   ngOnInit(): void {
-
+    this.prenumeranter = this.paperService.prenumeranter
   }
 
 

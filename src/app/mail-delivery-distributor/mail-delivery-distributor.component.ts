@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsPaperPublisherService } from '../news-paper-publisher.service';
-import { NewsPaper } from "../news-paper-publisher/NewsPaper.model";
+import {MailDeliveryService} from './MailDeliveryService.service'
+import { NewsPaper, NewsPaperForDelivery } from "../news-paper-publisher/NewsPaper.model";
 
 @Component({
   selector: 'app-mail-delivery-distributor',
@@ -9,11 +10,12 @@ import { NewsPaper } from "../news-paper-publisher/NewsPaper.model";
 })
 export class MailDeliveryDistributorComponent implements OnInit {
   subscription: any;
+  outbox: NewsPaperForDelivery[] = []
 
-  constructor(private paperService: NewsPaperPublisherService) { }
+  constructor(private paperService: NewsPaperPublisherService, private mailDeliveryService: MailDeliveryService ) { }
 
   ngOnInit(): void {
-
+    this.outbox = this.mailDeliveryService.papersForDelivery
 
     this.subscription = this.paperService.newEditionPublished.subscribe(
       // denna kod körs när .next(newspaper) körs och signalerar en förändring.
@@ -32,7 +34,16 @@ export class MailDeliveryDistributorComponent implements OnInit {
     console.log(`pickup new edition from DN`, newEdition)
 
     setTimeout(
-        () => console.log('picked up paper from DN')
+        () =>  {
+          console.log('picked up paper from DN')
+          // this.mailDeliveryService.papersForDelivery.push(newEdition)
+          //Associera tidning med prenumerant:
+          this.paperService.prenumeranter.forEach(prenumerant => {
+            this.mailDeliveryService.handleOutboxPapers(prenumerant.email, newEdition)
+          });
+
+          console.log(...this.outbox)
+        }
       , 1000)
 
       //TODO: deliver to subscribers.
@@ -43,8 +54,10 @@ export class MailDeliveryDistributorComponent implements OnInit {
    * deliver to subscribers mailbox.
    * TODO: add logic for handling subscriber address
    */
-  deliverToSubscriber(): void {
-
+  onDeliverToSubscriber(): void {
+    this.mailDeliveryService.papersForDelivery.forEach(paper => {
+      this.mailDeliveryService.paperDelivery.next(paper)
+    })
 
   }
 
