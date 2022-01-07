@@ -11,7 +11,7 @@ import { Prenumerant } from './Prenumerant.model';
 export class MailDeliveryService {
   public paperDelivery = new Subject<NewsPaperForDelivery>();
   public emptyMailbox = new Subject<NewsPaperForDelivery>()
-  public boxHasChanged = new Subject<NewsPaperForDelivery[]>()
+
   prenumeranter: Prenumerant[] =  []
   papersForDelivery: NewsPaperForDelivery[] = []
 
@@ -42,21 +42,8 @@ export class MailDeliveryService {
   }
 
 
-  boxCleaner(userEmail: string) {
-    let slimArray: NewsPaperForDelivery[] = []
 
-    this.papersForDelivery.forEach(paper => {
-      if(userEmail != paper.address) {
-        slimArray.push(paper)
-      }
-
-
-    this.papersForDelivery = slimArray
-    this.boxHasChanged.next(this.papersForDelivery)
-    console.log('BOX HAS CHANGED')
-  });
-  }
-
+ //**Flyttar service till mailbox för att kunna rensa postens outbox när post levereras */
 
 
 

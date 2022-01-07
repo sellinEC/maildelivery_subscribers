@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MailDeliveryService } from 'src/app/mail-delivery-distributor/MailDeliveryService.service';
 import { NewsPaperForDelivery } from 'src/app/news-paper-publisher/NewsPaper.model';
+import { MailboxService } from './MailboxService.service';
 
 @Component({
   selector: 'app-news-paper-subscriber-mailbox',
@@ -13,7 +14,7 @@ export class NewsPaperSubscriberMailboxComponent implements OnInit {
 
   inbox: NewsPaperForDelivery[] = []
   private paperSubscription?: Subscription;
-  constructor(private postalService: MailDeliveryService) { }
+  constructor(private postalService: MailDeliveryService, private mailBoxService: MailboxService) { }
 
   ngOnInit(): void {
     this.paperSubscription = this.postalService.paperDelivery.subscribe(
@@ -21,7 +22,7 @@ export class NewsPaperSubscriberMailboxComponent implements OnInit {
       this.inbox.push(paper)
      }
     )
-    this.postalService.boxHasChanged.subscribe(
+    this.mailBoxService.boxHasChanged.subscribe(
       (changedbox: NewsPaperForDelivery[]) => {
         this.inbox = changedbox
       }
@@ -32,7 +33,7 @@ export class NewsPaperSubscriberMailboxComponent implements OnInit {
   onEmptyMailbox() {
     console.log('Empty!!!')
       let email = 'mail@mail.com'
-      this.postalService.boxCleaner(email)
+      this.mailBoxService.boxCleaner(email)
     this.inbox.forEach(paper => {
       console.log(paper.address + ' ' + paper.frontNewsHeadline + ' On empty mailbox')
     });
