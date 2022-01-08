@@ -5,6 +5,7 @@ import { MailDeliveryService } from 'src/app/mail-delivery-distributor/MailDeliv
 import { NewsPaperForDelivery } from 'src/app/news-paper-publisher/NewsPaper.model';
 import { MailboxService } from './MailboxService.service';
 
+
 @Component({
   selector: 'app-news-paper-subscriber-mailbox',
   templateUrl: './news-paper-subscriber-mailbox.component.html',
@@ -17,29 +18,40 @@ export class NewsPaperSubscriberMailboxComponent implements OnInit {
   constructor(private postalService: MailDeliveryService, private mailBoxService: MailboxService) { }
 
   ngOnInit(): void {
+
+    this.inbox = this.mailBoxService.userInbox
+
     this.paperSubscription = this.postalService.paperDelivery.subscribe(
      ( paper: NewsPaperForDelivery) => {
-      this.inbox.push(paper)
+      this.mailBoxService.addToMailbox(paper)
      }
     )
+
     this.mailBoxService.boxHasChanged.subscribe(
       (changedbox: NewsPaperForDelivery[]) => {
-        this.inbox = changedbox
+        this.inbox = changedbox;
+
       }
     )
-  }
-
-  //Kaosfunktion som "plockar" ut endast tidnningar som tillhör specifik user
-  onEmptyMailbox() {
-    console.log('Empty!!!')
-      let email = 'mail@mail.com'
-      this.mailBoxService.boxCleaner(email)
-    this.inbox.forEach(paper => {
-      console.log(paper.address + ' ' + paper.frontNewsHeadline + ' On empty mailbox')
-    });
 
 
 
   }
 
+  //Kaosfunktion som via service "plockar" ut endast tidnningar som tillhör specifik user
+  onEmptyMailbox(email: string) {
+
+    this.mailBoxService.boxCleaner(email)
+
+    // this.inbox.forEach(paper => {
+    //   console.log(paper.address + ' ' + paper.frontNewsHeadline + ' On empty mailbox')
+    // });
+
+    console.log(email)
+
+  }
+
+  onTest() {
+    this.mailBoxService.onTester()
+  }
 }

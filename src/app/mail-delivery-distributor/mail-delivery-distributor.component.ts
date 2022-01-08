@@ -58,6 +58,8 @@ export class MailDeliveryDistributorComponent implements OnInit {
     this.mailDeliveryService.papersForDelivery.forEach(paper => {
       this.mailDeliveryService.paperDelivery.next(paper)
     })
+    //clear papers after delivery
+    this.outbox = []
 
   }
 

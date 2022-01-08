@@ -9,30 +9,37 @@ import { NewsPaper, NewsPaperForDelivery } from 'src/app/news-paper-publisher/Ne
 })
 export class MailboxService {
 public boxHasChanged = new Subject<NewsPaperForDelivery[]>()
-inbox: NewsPaperForDelivery[] = []
+userInbox: NewsPaperForDelivery[] = []
 
 
+  constructor() { }
 
-
-
-
-
-
-  constructor(private postalService: MailDeliveryService) { }
 
   boxCleaner(userEmail: string) {
     let slimArray: NewsPaperForDelivery[] = []
 
-    this.inbox.forEach(paper => {
+    this.userInbox.forEach(paper => {
       if(userEmail != paper.address) {
         slimArray.push(paper)
       }
 
-
-    this.inbox = slimArray
-    this.boxHasChanged.next(this.inbox)
+    this.userInbox = slimArray
+    this.boxHasChanged.next(this.userInbox)
     console.log('BOX HAS CHANGED')
   });
+  }
+
+  setInbox(inbox: NewsPaperForDelivery[]) {
+    this.userInbox = inbox
+    this.boxHasChanged.next(this.userInbox)
+  }
+
+  addToMailbox(paper: NewsPaperForDelivery) {
+    this.userInbox.push(paper)
+  }
+
+  onTester() {
+    console.log('Kontakt!')
   }
 
 }
