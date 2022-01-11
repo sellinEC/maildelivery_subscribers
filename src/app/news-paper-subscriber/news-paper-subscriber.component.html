@@ -1,10 +1,16 @@
-
-
-<mat-card >
-
-  <mat-card-header >
-  Subscribe to newspaper
-  </mat-card-header>
+<mat-card>
+  <form (ngSubmit)="subscribeToNewsPaper(form)" #form="ngForm">
+    <div>
+      <label for="name">Namn</label>
+      <input type="text" id="name" class="form-control" name="name" ngModel required>
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="text" id="name" class="form-control" name="email" ngModel required>
+    </div>
+    <button>Prenumerera</button>
+  </form>
+  <hr>
 
   <mat-card-subtitle>
     <span *ngIf="subscriptionIsActive">
@@ -16,14 +22,16 @@
 
   </mat-card-subtitle>
 
-  <mat-card-content>
-    <button mat-button color="primary"  (click)="subscribeToNewsPaper()" tabindex="0">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+  <!-- <mat-card-content>
+    <button mat-button color="primary" tabindex="0">
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+      </svg>
       <span>Subscribe to newspaper</span>
     </button>
 
-  </mat-card-content>
-
+  </mat-card-content> -->
+  <app-prenumerant-list></app-prenumerant-list>
 
 
   <h3>Alla tidningar mottagna ({{allNewsPapersReceived.length}})</h3>
@@ -35,8 +43,5 @@
   </div>
 
 
-  <app-news-paper-subscriber-mailbox
-    style="margin-top: 5rem;"></app-news-paper-subscriber-mailbox>
+  <app-news-paper-subscriber-mailbox style="margin-top: 5rem;"></app-news-paper-subscriber-mailbox>
 </mat-card>
-
-

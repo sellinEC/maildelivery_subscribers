@@ -9,7 +9,9 @@ import { NewsPaper, NewsPaperForDelivery } from 'src/app/news-paper-publisher/Ne
 })
 export class MailboxService {
 public boxHasChanged = new Subject<NewsPaperForDelivery[]>()
+public emptyMailbox = new Subject<NewsPaperForDelivery[]>()
 userInbox: NewsPaperForDelivery[] = []
+deliveredPapers: NewsPaperForDelivery[] = []
 
 
   constructor() { }
@@ -17,12 +19,16 @@ userInbox: NewsPaperForDelivery[] = []
 
   boxCleaner(userEmail: string) {
     let slimArray: NewsPaperForDelivery[] = []
+    let deliveredArray: NewsPaperForDelivery[] = []
 
     this.userInbox.forEach(paper => {
       if(userEmail != paper.address) {
         slimArray.push(paper)
+      }else {
+        deliveredArray.push(paper)
       }
-
+    this.deliveredPapers = deliveredArray
+    this.emptyMailbox.next(this.deliveredPapers)
     this.userInbox = slimArray
     this.boxHasChanged.next(this.userInbox)
     console.log('BOX HAS CHANGED')

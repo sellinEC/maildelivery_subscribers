@@ -4,6 +4,7 @@ import { NewsPaperPublisherService } from '../news-paper-publisher.service';
 import { NewsPaper, NewsPaperForDelivery } from '../news-paper-publisher/NewsPaper.model';
 import { Prenumerant } from './Prenumerant.model';
 
+//Gör om Newspaper till NewsPaper for delivery och skickar till mailbox
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,6 @@ export class MailDeliveryService {
 
   prenumeranter: Prenumerant[] =  []
   papersForDelivery: NewsPaperForDelivery[] = []
-
-
-  /**
-   *
-   * hanterar signalering av när en ny utgåva finns tillgänglig för prenumeranterna ;
-   *
-   * @example
-   * prenumerera med .subscribe("DIN funktion här som ska agera på nästa utgåva")
-   * publicera ny utgåva genom att använda .next(newsPaper);
-   */
 
 
 

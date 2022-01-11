@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MailDeliveryService } from '../mail-delivery-distributor/MailDeliveryService.service';
 import { Prenumerant } from '../mail-delivery-distributor/Prenumerant.model';
 import { NewsPaperPublisherService } from '../news-paper-publisher.service';
 import { NewsPaper, NewsPaperForDelivery } from "../news-paper-publisher/NewsPaper.model";
+import { MailboxService } from './news-paper-subscriber-mailbox/MailboxService.service';
 
 
 @Component({
@@ -12,37 +14,47 @@ import { NewsPaper, NewsPaperForDelivery } from "../news-paper-publisher/NewsPap
   styleUrls: ['./news-paper-subscriber.component.scss']
 })
 export class NewsPaperSubscriberComponent implements OnInit {
-
+  @ViewChild('form')
   public latestEditionPickedUpFromMailbox?: NewsPaper;
-  prenumerant = new Prenumerant('fritte', 'mail@mail.com' )
+  // prenumerant = new Prenumerant('fritte', 'mail@mail.com' )
 
   //TODO: move to post box component
   private subscription?: Subscription;
 
   //TODO: ?  move to post box component
-  allNewsPapersReceived: NewsPaper[] = [];
+  allNewsPapersReceived: NewsPaperForDelivery[] = [];
   public subscriptionIsActive: boolean = false;
 
-  constructor(private paperService: NewsPaperPublisherService, private postalService: MailDeliveryService) { }
+  constructor(private paperService: NewsPaperPublisherService, private postalService: MailDeliveryService, private mailBoxService: MailboxService) { }
 
   ngOnInit(): void {
   }
 
 
 
-  subscribeToNewsPaper(): void {
-
+  subscribeToNewsPaper(form: NgForm): void {
     this.subscriptionIsActive = true;
 
-    //TODO: move to news paper publisher service, handling the subscriptions via user.Id or  user.email/address
-    this.subscription = this.postalService.emptyMailbox.subscribe(
+
+    this.subscription = this.mailBoxService.emptyMailbox.subscribe(
       // denna kod körs när .next(newspaper) körs och signalerar en förändring.
-      (deliveredPaper: NewsPaperForDelivery) => {
-        this.allNewsPapersReceived.push(deliveredPaper);
+      (deliveredPapers: NewsPaperForDelivery[]) => {
+        deliveredPapers.forEach(paper => {
+
+          this.allNewsPapersReceived.push(paper);
+        })
       }
     );
 
-    this.paperService.addPrenumerant(this.prenumerant)
+
+    const value = form.value
+    const newPrenumerant = new Prenumerant(value.name, value.email);
+
+      this.paperService.addPrenumerant(newPrenumerant)
+
+
+    form.reset();
+    // this.paperService.addPrenumerant(this.prenumerant)
 
 
   }
@@ -54,4 +66,16 @@ export class NewsPaperSubscriberComponent implements OnInit {
 
   }
 
+  onPrenumerera(form: NgForm) {
+    const value = form.value
+    const newPrenumerant = new Prenumerant(value.name, value.email);
+
+      this.paperService.addPrenumerant(newPrenumerant)
+
+
+    form.reset();
+
+  }
 }
+
+

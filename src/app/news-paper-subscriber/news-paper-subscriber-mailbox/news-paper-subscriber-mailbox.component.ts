@@ -18,11 +18,12 @@ export class NewsPaperSubscriberMailboxComponent implements OnInit {
   constructor(private postalService: MailDeliveryService, private mailBoxService: MailboxService) { }
 
   ngOnInit(): void {
-
+    //synkar inboxen med mailbox-service
     this.inbox = this.mailBoxService.userInbox
-
+//tar emot tidning från MailDeliveryService och lägger in i mailboxservice
     this.paperSubscription = this.postalService.paperDelivery.subscribe(
      ( paper: NewsPaperForDelivery) => {
+
       this.mailBoxService.addToMailbox(paper)
      }
     )
@@ -38,7 +39,7 @@ export class NewsPaperSubscriberMailboxComponent implements OnInit {
 
   }
 
-  //Kaosfunktion som via service "plockar" ut endast tidnningar som tillhör specifik user
+  //Kaosfunktion som via service "plockar" ut endast tidningar som tillhör specifik user
   onEmptyMailbox(email: string) {
 
     this.mailBoxService.boxCleaner(email)

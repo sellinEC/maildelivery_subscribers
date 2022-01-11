@@ -11,13 +11,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule  } from "@angular/material/card";
 import { MatButtonModule  } from "@angular/material/button";
 import { MatButtonToggleModule  } from "@angular/material/button-toggle";
+import { FormsModule } from '@angular/forms';
+import { PrenumerantListComponent } from './news-paper-subscriber/prenumerant-list/prenumerant-list.component';
 @NgModule({
   declarations: [
     AppComponent,
     NewsPaperPublisherComponent,
     NewsPaperSubscriberComponent,
     NewsPaperSubscriberMailboxComponent,
-    MailDeliveryDistributorComponent
+    MailDeliveryDistributorComponent,
+    PrenumerantListComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { MatButtonToggleModule  } from "@angular/material/button-toggle";
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

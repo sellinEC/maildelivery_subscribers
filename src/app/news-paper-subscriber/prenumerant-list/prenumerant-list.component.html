@@ -1,0 +1,21 @@
+<div>
+  <ul>
+    <li *ngFor="let prenumerant of prenumeranter">
+      <div class="wrapper mt-2 p-3 border">
+        <div class="row">
+          <div class="col">
+            {{prenumerant.name}}
+
+          </div>
+          <div class="col mb-3">{{prenumerant.email}}</div>
+          <div class="d-flex">
+            <span class="pointer justify-content-left" (click)="onCollect(prenumerant.email)">Collect mail</span>
+
+          </div>
+
+        </div>
+
+      </div>
+    </li>
+  </ul>
+</div>
