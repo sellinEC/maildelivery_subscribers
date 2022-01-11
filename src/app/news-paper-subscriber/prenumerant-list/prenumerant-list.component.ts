@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
 import { Prenumerant } from 'src/app/mail-delivery-distributor/Prenumerant.model';
 import { NewsPaperPublisherService } from 'src/app/news-paper-publisher.service';
 import { NewsPaperForDelivery } from 'src/app/news-paper-publisher/NewsPaper.model';
@@ -12,6 +13,7 @@ import { MailboxService } from '../news-paper-subscriber-mailbox/MailboxService.
 export class PrenumerantListComponent implements OnInit {
   prenumeranter: Prenumerant[] = []
   deliveredPapers: NewsPaperForDelivery[] = []
+  mailCount: number= 0
   constructor(private parerService: NewsPaperPublisherService, private mailBoxService: MailboxService) { }
 
   ngOnInit(): void {
@@ -23,6 +25,12 @@ export class PrenumerantListComponent implements OnInit {
          this.deliveredPapers = changedbox;
 
        }
+     )
+
+     this.mailBoxService.mailCount.subscribe(
+      (mailCount: number) => {
+        this.mailCount = mailCount
+      }
      )
 
 

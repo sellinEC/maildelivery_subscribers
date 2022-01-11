@@ -10,6 +10,7 @@ import { NewsPaper, NewsPaperForDelivery } from 'src/app/news-paper-publisher/Ne
 export class MailboxService {
 public boxHasChanged = new Subject<NewsPaperForDelivery[]>()
 public emptyMailbox = new Subject<NewsPaperForDelivery[]>()
+public mailCount = new Subject<number>()
 userInbox: NewsPaperForDelivery[] = []
 deliveredPapers: NewsPaperForDelivery[] = []
 
@@ -35,6 +36,18 @@ deliveredPapers: NewsPaperForDelivery[] = []
   });
   }
 
+  mailCounter(userEmail: string) {
+    let countedMail: NewsPaperForDelivery[] = []
+
+
+    this.userInbox.forEach(paper => {
+      if(userEmail = paper.address) {
+        countedMail.push(paper)
+      }
+      this.mailCount.next(countedMail.length)
+  });
+  }
+
   setInbox(inbox: NewsPaperForDelivery[]) {
     this.userInbox = inbox
     this.boxHasChanged.next(this.userInbox)
@@ -47,5 +60,7 @@ deliveredPapers: NewsPaperForDelivery[] = []
   onTester() {
     console.log('Kontakt!')
   }
+
+
 
 }

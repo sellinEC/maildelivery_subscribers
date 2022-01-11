@@ -3,14 +3,27 @@
     <li *ngFor="let prenumerant of prenumeranter">
       <div class="wrapper mt-2 p-3 border">
         <div class="row">
-          <div class="col">
+          <div class="col align-items-center justify-content-center">
             {{prenumerant.name}}
 
           </div>
-          <div class="col mb-3">{{prenumerant.email}}</div>
-          <div class="d-flex">
-            <span class="pointer justify-content-left" (click)="onCollect(prenumerant.email)">Collect mail</span>
+          <div class="col mb-3 d-flex ">{{prenumerant.email}}
 
+
+
+          </div>
+
+
+          <div class="d-flex">
+
+            <button (click)="onCollect(prenumerant.email)" class="btn btn-primary position-relative">Collect mail
+
+
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{mailCount}}
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </button>
           </div>
 
         </div>

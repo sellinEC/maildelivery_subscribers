@@ -1,3 +1,15 @@
 .pointer:hover {
   opacity: 0.75;
 }
+
+.tester {
+  width: 20px;
+}
+
+.tester > .poser {
+  margin-top: 2px;
+}
+
+.btn {
+  font-size: small;
+}
