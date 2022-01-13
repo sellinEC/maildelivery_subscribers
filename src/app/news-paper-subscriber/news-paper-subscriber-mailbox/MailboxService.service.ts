@@ -33,6 +33,8 @@ deliveredPapers: NewsPaperForDelivery[] = []
     this.userInbox = slimArray
     this.boxHasChanged.next(this.userInbox)
     console.log('BOX HAS CHANGED')
+    console.log('userInbox: ' + this.onLogger(this.userInbox))
+    console.log('deliveredPapers: ' + this.onLogger(this.deliveredPapers))
   });
   }
 
@@ -62,5 +64,10 @@ deliveredPapers: NewsPaperForDelivery[] = []
   }
 
 
+  onLogger(arr: Array<any>) {
+    arr.forEach(element => {
+      console.log(element)
+    });
+  }
 
 }

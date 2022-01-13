@@ -60,6 +60,7 @@ export class MailDeliveryDistributorComponent implements OnInit {
     })
     //clear papers after delivery
     this.outbox = []
+    this.mailDeliveryService.emptyBox()
 
   }
 

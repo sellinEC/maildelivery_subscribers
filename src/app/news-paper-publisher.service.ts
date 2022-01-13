@@ -9,7 +9,8 @@ import { Prenumerant } from './mail-delivery-distributor/Prenumerant.model';
 export class NewsPaperPublisherService {
   public newEditionPublished = new Subject<NewsPaper>();
 
-  prenumeranter: Prenumerant[] = [{name: 'fruitface', email: 'test@mail.com'}]
+  prenumeranter: Prenumerant[] = []
+  // [{name: 'fruitface', email: 'test@mail.com'}]
 
 
 

@@ -11,7 +11,7 @@ import { Prenumerant } from './Prenumerant.model';
 })
 export class MailDeliveryService {
   public paperDelivery = new Subject<NewsPaperForDelivery>();
-  public emptyMailbox = new Subject<NewsPaperForDelivery>()
+
 
   prenumeranter: Prenumerant[] =  []
   papersForDelivery: NewsPaperForDelivery[] = []
@@ -30,6 +30,10 @@ export class MailDeliveryService {
    let readyToDeliverNewspaper = new NewsPaperForDelivery(adress, newspaper)
    this.papersForDelivery.push(readyToDeliverNewspaper)
    console.log(readyToDeliverNewspaper)
+  }
+
+  emptyBox() {
+    this.papersForDelivery = []
   }
 
 

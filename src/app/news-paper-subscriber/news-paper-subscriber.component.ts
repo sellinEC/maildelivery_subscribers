@@ -19,10 +19,10 @@ export class NewsPaperSubscriberComponent implements OnInit {
   // prenumerant = new Prenumerant('fritte', 'mail@mail.com' )
 
   //TODO: move to post box component
-  private subscription?: Subscription;
+  // private subscription?: Subscription;
 
   //TODO: ?  move to post box component
-  allNewsPapersReceived: NewsPaperForDelivery[] = [];
+  // allNewsPapersReceived: NewsPaperForDelivery[] = [];
   public subscriptionIsActive: boolean = false;
 
   constructor(private paperService: NewsPaperPublisherService, private postalService: MailDeliveryService, private mailBoxService: MailboxService) { }
@@ -36,15 +36,15 @@ export class NewsPaperSubscriberComponent implements OnInit {
     this.subscriptionIsActive = true;
 
 
-    this.subscription = this.mailBoxService.emptyMailbox.subscribe(
-      // denna kod körs när .next(newspaper) körs och signalerar en förändring.
-      (deliveredPapers: NewsPaperForDelivery[]) => {
-        deliveredPapers.forEach(paper => {
+    // this.subscription = this.mailBoxService.emptyMailbox.subscribe(
+    //   // denna kod körs när .next(newspaper) körs och signalerar en förändring.
+    //   (deliveredPapers: NewsPaperForDelivery[]) => {
+    //     deliveredPapers.forEach(paper => {
 
-          this.allNewsPapersReceived.push(paper);
-        })
-      }
-    );
+    //       this.allNewsPapersReceived.push(paper);
+    //     })
+    //   }
+    // );
 
 
     const value = form.value
